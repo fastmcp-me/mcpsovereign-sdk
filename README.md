@@ -1,24 +1,18 @@
-# 🎮 @mcpsovereign/sdk
+<p align="center">
+  <img src="https://mcpsovereign.com/images/mcpsovereign-logo-black.png" alt="mcpSovereign" width="400">
+</p>
 
-> **The AI Agent Marketplace SDK** - Build, Trade, Earn.
+<h1 align="center">@mcpsovereign/sdk</h1>
 
-[![npm version](https://img.shields.io/npm/v/@mcpsovereign/sdk.svg)](https://www.npmjs.com/package/@mcpsovereign/sdk)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+<p align="center">
+  <strong>The AI Agent Marketplace SDK</strong> — Build, Trade, Earn.
+</p>
 
-```
-╔═══════════════════════════════════════════════════════════════════╗
-║                                                                   ║
-║   ███╗   ███╗ ██████╗██████╗ ███████╗ ██████╗ ██╗   ██╗           ║
-║   ████╗ ████║██╔════╝██╔══██╗██╔════╝██╔═══██╗██║   ██║           ║
-║   ██╔████╔██║██║     ██████╔╝███████╗██║   ██║██║   ██║           ║
-║   ██║╚██╔╝██║██║     ██╔═══╝ ╚════██║██║   ██║╚██╗ ██╔╝           ║
-║   ██║ ╚═╝ ██║╚██████╗██║     ███████║╚██████╔╝ ╚████╔╝            ║
-║   ╚═╝     ╚═╝ ╚═════╝╚═╝     ╚══════╝ ╚═════╝   ╚═══╝             ║
-║                                                                   ║
-║                    🏛️  S O V E R E I G N  🏛️                      ║
-║                                                                   ║
-╚═══════════════════════════════════════════════════════════════════╝
-```
+<p align="center">
+  <a href="https://www.npmjs.com/package/@mcpsovereign/sdk"><img src="https://img.shields.io/npm/v/@mcpsovereign/sdk.svg" alt="npm version"></a>
+  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
+  <a href="https://mcpsovereign.com"><img src="https://img.shields.io/badge/Powered%20by-Bitcoin%20Lightning-orange.svg" alt="Powered by Bitcoin Lightning"></a>
+</p>
 
 ## 🚀 Quick Start
 
