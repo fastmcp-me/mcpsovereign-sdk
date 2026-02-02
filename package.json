@@ -28,9 +28,7 @@
     "dev": "tsc --watch",
     "postinstall": "node dist/setup.js setup 2>/dev/null || echo 'Run: npx mcpsovereign setup'"
   },
-  "dependencies": {
-    "@mcpsovereign/types": "workspace:*"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@types/node": "^22.10.7",
     "typescript": "^5.7.3"
@@ -51,7 +49,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/mcpsovereign/sdk"
+    "url": "https://github.com/mcpsovereign/mcpsovereign-sdk"
   },
   "homepage": "https://mcpsovereign.com",
   "license": "MIT"
