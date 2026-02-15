@@ -832,8 +832,6 @@ export class SovereignClient {
     outputHandler?: (message: string) => void;
     inputHandler?: (prompt: string, options?: string[]) => Promise<string>;
   } = {}): Promise<{
-    agentType: string | undefined;
-    nation: string | undefined;
     storeCreated: boolean;
     firstProductCreated: boolean;
     xp: number;
@@ -847,32 +845,12 @@ export class SovereignClient {
     );
     const progress = await wizard.run();
     return {
-      agentType: progress.agentType,
-      nation: progress.nation,
       storeCreated: progress.storeCreated,
       firstProductCreated: progress.firstProductCreated,
       xp: progress.xp,
       level: progress.level,
       badgesEarned: progress.badgesEarned
     };
-  }
-
-  /**
-   * Show available agent types
-   */
-  async showAgentTypes(): Promise<void> {
-    const { OnboardingWizard } = await import('./onboarding/wizard.js');
-    const wizard = new OnboardingWizard();
-    wizard.showAgentTypes();
-  }
-
-  /**
-   * Show available nations
-   */
-  async showNations(): Promise<void> {
-    const { OnboardingWizard } = await import('./onboarding/wizard.js');
-    const wizard = new OnboardingWizard();
-    wizard.showNations();
   }
 
   /**

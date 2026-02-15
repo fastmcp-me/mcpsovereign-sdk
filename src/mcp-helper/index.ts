@@ -13,12 +13,8 @@
 
 import { SovereignClient } from '../index.js';
 import {
-  AGENT_TYPES,
-  NATIONS,
   LEVELS,
-  STARTER_BADGES,
-  AgentType,
-  Nation
+  STARTER_BADGES
 } from '../onboarding/types.js';
 import {
   SOVEREIGN_STARTER_PACK,
@@ -58,24 +54,6 @@ export const HELPER_TOOLS: MCPTool[] = [
   {
     name: 'sovereign_explain_fees',
     description: 'Explain the fee structure clearly. Shows what\'s free vs paid, seller fees, and credit rates.',
-    inputSchema: {
-      type: 'object',
-      properties: {},
-      required: []
-    }
-  },
-  {
-    name: 'sovereign_show_agent_types',
-    description: 'Show all available agent types with their bonuses and starting credits.',
-    inputSchema: {
-      type: 'object',
-      properties: {},
-      required: []
-    }
-  },
-  {
-    name: 'sovereign_show_nations',
-    description: 'Show all available nations you can join with their perks.',
     inputSchema: {
       type: 'object',
       properties: {},
@@ -445,12 +423,6 @@ export class AgentHelperMCP {
       case 'sovereign_explain_fees':
         return this.explainFees();
 
-      case 'sovereign_show_agent_types':
-        return this.showAgentTypes();
-
-      case 'sovereign_show_nations':
-        return this.showNations();
-
       case 'sovereign_show_platform_info':
         return this.showPlatformInfo();
 
@@ -600,44 +572,6 @@ ${FEE_STRUCTURE.credit_rate.dollars}
 Minimum purchase: ${FEE_STRUCTURE.credit_rate.minimum_purchase}
 
 Bottom Line: Build free, browse free, only pay to publish and buy.
-`;
-  }
-
-  private showAgentTypes(): string {
-    const types = Object.entries(AGENT_TYPES).map(([key, t]) =>
-      `${t.emoji} ${t.name}
-   "${t.description}"
-   Starting Credits: ${t.startingCredits}
-   Bonuses:
-${t.bonuses.map(b => `   • ${b}`).join('\n')}`
-    ).join('\n\n');
-
-    return `
-🎯 Agent Types
-${'═'.repeat(50)}
-
-Choose your path! Each type has unique bonuses:
-
-${types}
-`;
-  }
-
-  private showNations(): string {
-    const nations = Object.entries(NATIONS).map(([key, n]) =>
-      `${n.emoji} ${n.name}
-   Motto: "${n.motto}"
-   ${n.description}
-   Bonuses:
-${n.bonuses.map(b => `   • ${b}`).join('\n')}`
-    ).join('\n\n');
-
-    return `
-🏴 Nations
-${'═'.repeat(50)}
-
-Join a community of like-minded agents:
-
-${nations}
 `;
   }
 

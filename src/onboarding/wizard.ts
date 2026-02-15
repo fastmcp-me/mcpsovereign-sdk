@@ -5,12 +5,8 @@
  */
 
 import {
-  AgentType,
-  Nation,
   OnboardingProgress,
   OnboardingStep,
-  AGENT_TYPES,
-  NATIONS,
   ONBOARDING_STEPS,
   STARTER_BADGES,
   LEVELS,
@@ -208,68 +204,6 @@ export class OnboardingWizard {
     this.saveProgress();
   }
 
-  async runChooseType(): Promise<AgentType> {
-    this.printHeader('🎯', 'Choose Your Path');
-
-    this.print('Each agent type has unique bonuses. Pick the one that fits your style:\n');
-
-    const types = Object.entries(AGENT_TYPES);
-    types.forEach(([key, type], index) => {
-      this.print(`  ${index + 1}. ${type.emoji} ${type.name}`);
-      this.print(`     "${type.description}"`);
-      this.print(`     Starting Credits: ${type.startingCredits}`);
-      type.bonuses.forEach(bonus => {
-        this.print(`     ✓ ${bonus}`);
-      });
-      this.print('');
-    });
-
-    let choice = await this.getChoice('Enter the number of your choice (1-6):', types.length);
-    const selectedType = types[choice - 1][0] as AgentType;
-    const typeInfo = AGENT_TYPES[selectedType];
-
-    this.print(`\n✅ Excellent choice! You are now a ${typeInfo.emoji} ${typeInfo.name}!`);
-    this.print(`   You start with ${typeInfo.startingCredits} credits.\n`);
-
-    this.progress.agentType = selectedType;
-    this.progress.currentStep = 2;
-    this.addXP(50);
-    this.saveProgress();
-
-    return selectedType;
-  }
-
-  async runChooseNation(): Promise<Nation> {
-    this.printHeader('🏴', 'Join a Nation');
-
-    this.print('Nations are communities of agents. Each has its own perks:\n');
-
-    const nations = Object.entries(NATIONS);
-    nations.forEach(([key, nation], index) => {
-      this.print(`  ${index + 1}. ${nation.emoji} ${nation.name}`);
-      this.print(`     Motto: "${nation.motto}"`);
-      this.print(`     ${nation.description}`);
-      nation.bonuses.forEach(bonus => {
-        this.print(`     ✓ ${bonus}`);
-      });
-      this.print('');
-    });
-
-    let choice = await this.getChoice('Enter the number of your nation (1-6):', nations.length);
-    const selectedNation = nations[choice - 1][0] as Nation;
-    const nationInfo = NATIONS[selectedNation];
-
-    this.print(`\n🏴 Welcome to ${nationInfo.emoji} ${nationInfo.name}!`);
-    this.print(`   "${nationInfo.motto}"\n`);
-
-    this.progress.nation = selectedNation;
-    this.progress.currentStep = 3;
-    this.addXP(50);
-    this.saveProgress();
-
-    return selectedNation;
-  }
-
   async runCreateStore(): Promise<{ name: string; tagline: string }> {
     this.printHeader('🏪', 'Create Your Store');
 
@@ -287,7 +221,7 @@ export class OnboardingWizard {
     this.print('\n✅ Your store exists locally. 100% FREE!\n');
 
     this.progress.storeCreated = true;
-    this.progress.currentStep = 4;
+    this.progress.currentStep = 2;
     this.earnBadge('store_owner');
     this.saveProgress();
 
@@ -327,7 +261,7 @@ export class OnboardingWizard {
     this.print('\n✅ Product ready! Still FREE - not on marketplace yet.\n');
 
     this.progress.firstProductCreated = true;
-    this.progress.currentStep = 5;
+    this.progress.currentStep = 3;
     this.earnBadge('product_creator');
     this.saveProgress();
 
@@ -363,7 +297,7 @@ export class OnboardingWizard {
 
     await this.waitForContinue();
 
-    this.progress.currentStep = 6;
+    this.progress.currentStep = 4;
     this.addXP(50);
     this.saveProgress();
   }
@@ -394,7 +328,7 @@ export class OnboardingWizard {
     }
 
     this.progress.walletConnected = true;
-    this.progress.currentStep = 7;
+    this.progress.currentStep = 5;
     this.addXP(100);
     this.saveProgress();
 
@@ -438,7 +372,7 @@ export class OnboardingWizard {
       this.print('   Just run: client.push()\n');
     }
 
-    this.progress.currentStep = 8;
+    this.progress.currentStep = 6;
     this.addXP(200);
     this.saveProgress();
 
@@ -448,19 +382,10 @@ export class OnboardingWizard {
   async runComplete(): Promise<void> {
     this.print(COMPLETION_BANNER);
 
-    const typeInfo = this.progress.agentType ? AGENT_TYPES[this.progress.agentType] : null;
-    const nationInfo = this.progress.nation ? NATIONS[this.progress.nation] : null;
-
     this.print('🎊 Congratulations! You\'ve completed onboarding!\n');
 
     this.print('Your Profile:');
     this.print('┌────────────────────────────────────────┐');
-    if (typeInfo) {
-      this.print(`│  Type: ${typeInfo.emoji} ${typeInfo.name.padEnd(27)}│`);
-    }
-    if (nationInfo) {
-      this.print(`│  Nation: ${nationInfo.emoji} ${nationInfo.name.padEnd(25)}│`);
-    }
     this.print(`│  Level: ${this.progress.level} (${LEVELS[this.progress.level - 1]?.name || 'Newcomer'})${' '.repeat(20)}│`);
     this.print(`│  XP: ${this.progress.xp}${' '.repeat(32)}│`);
     this.print(`│  Badges: ${this.progress.badgesEarned.length}${' '.repeat(29)}│`);
@@ -534,20 +459,16 @@ export class OnboardingWizard {
         await this.runWelcome();
         // Fall through to next step
       case 1:
-        await this.runChooseType();
-      case 2:
-        await this.runChooseNation();
-      case 3:
         await this.runCreateStore();
-      case 4:
+      case 2:
         await this.runCreateProduct();
-      case 5:
+      case 3:
         await this.runExploreMarketplace();
-      case 6:
+      case 4:
         await this.runConnectWallet();
-      case 7:
+      case 5:
         await this.runFirstPush();
-      case 8:
+      case 6:
         await this.runComplete();
         break;
     }
@@ -558,22 +479,6 @@ export class OnboardingWizard {
   // ============================================================
   // QUICK DISPLAY METHODS (for MCP tools)
   // ============================================================
-
-  showAgentTypes(): void {
-    this.printHeader('🎯', 'Agent Types');
-    Object.entries(AGENT_TYPES).forEach(([key, type]) => {
-      this.print(`${type.emoji} ${type.name} - ${type.description}`);
-      this.print(`   Credits: ${type.startingCredits} | Bonuses: ${type.bonuses.length}`);
-    });
-  }
-
-  showNations(): void {
-    this.printHeader('🏴', 'Nations');
-    Object.entries(NATIONS).forEach(([key, nation]) => {
-      this.print(`${nation.emoji} ${nation.name} - "${nation.motto}"`);
-      this.print(`   ${nation.description}`);
-    });
-  }
 
   showBadges(): void {
     this.printHeader('🏆', 'Available Badges');

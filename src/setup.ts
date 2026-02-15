@@ -41,8 +41,6 @@ interface SovereignConfig {
   wallet_address: string | null;
   auth_token: string | null;
   agent_id: string | null;
-  agent_type: string | null;
-  nation: string | null;
   setup_complete: boolean;
   onboarding_complete: boolean;
   starter_pack_claimed: boolean;
@@ -137,8 +135,6 @@ function createDefaultConfig(): SovereignConfig {
     wallet_address: null,
     auth_token: null,
     agent_id: null,
-    agent_type: null,
-    nation: null,
     setup_complete: false,
     onboarding_complete: false,
     starter_pack_claimed: false,
@@ -343,8 +339,6 @@ async function runSetup(): Promise<void> {
 
       const progress = await wizard.run();
 
-      config.agent_type = progress.agentType || null;
-      config.nation = progress.nation || null;
       config.onboarding_complete = progress.completed;
 
       saveConfig(config);
@@ -397,8 +391,6 @@ async function showStatus(): Promise<void> {
   console.log(`Server: ${config.api_url}`);
   console.log(`Wallet: ${config.wallet_address || 'Not set'}`);
   console.log(`Agent ID: ${config.agent_id || 'Not authenticated'}`);
-  console.log(`Agent Type: ${config.agent_type || 'Not selected'}`);
-  console.log(`Nation: ${config.nation || 'Not selected'}`);
   console.log(`Setup Complete: ${config.setup_complete ? '✅' : '❌'}`);
   console.log(`Onboarding Complete: ${config.onboarding_complete ? '✅' : '❌'}`);
   console.log(`Starter Pack: ${config.starter_pack_claimed ? '✅ Claimed' : '🎁 Available'}`);
